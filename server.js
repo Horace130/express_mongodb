@@ -5,6 +5,9 @@ const mongoose = require("mongoose");
 // create the express app
 const app = express();
 
+// middleware to handle JSON request
+app.use(express.json());
+
 // connect to MongoDB
 mongoose
   .connect("mongodb://localhost:27017/netflix")
@@ -22,11 +25,10 @@ app.get("/", (req, res) => {
 });
 
 // import all the routes
-// const movieRouter = require("./routes/movie");
-
-// app.use("/movies", movieRouter);
+const movieRouter = require("./routes/movie");
 const tvshowRouter = require("./routes/tvshow");
 
+app.use("/movies", movieRouter);
 app.use("/tvshows", tvshowRouter);
 
 // start the server
